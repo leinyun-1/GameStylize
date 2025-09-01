@@ -1,0 +1,17 @@
+CUDA_VISIBLE_DEVICES="4,5,6,7" python train_wan_t2v_ymzx.py \
+  --task train \
+  --train_architecture lora \
+  --dataset_path /mnt/aigc_cq/private/leinyu/data/ymzx/latent/ \
+  --output_path ./exp_out/0531 \
+  --dit_path "models/Wan-AI/Wan2.1-T2V-1.3B/diffusion_pytorch_model.safetensors" \
+  --pretrained_lora_path "exp_out/0531/checkpoints/epoch=0-step=500.ckpt" \
+  --steps_per_epoch 2000 \
+  --max_epochs 100 \
+  --learning_rate 1e-5 \
+  --batch_size 2 \
+  --lora_rank 128 \
+  --lora_alpha 128 \
+  --lora_target_modules "q,k,v,o,ffn.0,ffn.2" \
+  --accumulate_grad_batches 8 \
+  --use_gradient_checkpointing \
+  --use_swanlab

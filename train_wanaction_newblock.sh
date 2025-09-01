@@ -1,0 +1,13 @@
+CUDA_VISIBLE_DEVICES="4,5,6,7" python train_wan_t2v_ymzx.py \
+  --task train \
+  --model_type wan_action_block \
+  --dataset_path /mnt/aigc_cq/private/leinyu/data/ymzx/latent/ \
+  --dit_path "models/Wan-AI/Wan2.1-T2V-1.3B/diffusion_pytorch_model.safetensors" \
+  --output_path ./exp_out/train_exp/0626_wanaction_newblock \
+  --max_epochs 100 \
+  --learning_rate 1e-4 \
+  --batch_size 2 \
+  --log_iters 1000 \
+  --accumulate_grad_batches 1 \
+  --use_gradient_checkpointing \
+  --use_swanlab
