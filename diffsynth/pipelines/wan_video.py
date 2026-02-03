@@ -1095,12 +1095,12 @@ def model_fn_wan_video( # 为什么要重新实现core forward，就是因为旁
     
     x, (f, h, w) = dit.patchify(x)
 
-    if dit.has_action_input and action is not None:
-        action = dit.action_projection(action) # (b f 20*4) -> (b f 2048)
-        context = torch.cat([context, action], dim=1)
-        mask = dit.get_block_mask(f,h,w, x.device,x.dtype)
-    else:
-        mask = None 
+    # if dit.has_action_input and action is not None:
+    #     action = dit.action_projection(action) # (b f 20*4) -> (b f 2048)
+    #     context = torch.cat([context, action], dim=1)
+    #     mask = dit.get_block_mask(f,h,w, x.device,x.dtype)
+    # else:
+    #     mask = None 
     
     freqs = torch.cat([
         dit.freqs[0][:f].view(f, 1, 1, -1).expand(f, h, w, -1),
@@ -1132,7 +1132,7 @@ def model_fn_wan_video( # 为什么要重新实现core forward，就是因为旁
             #x = block(x, context, t_mod, freqs, mask)
             x = torch.utils.checkpoint.checkpoint(
                     create_custom_forward(block),
-                    x, context, t_mod, freqs, mask,
+                    x, context, t_mod, freqs,
                     use_reentrant=False,
                 )
             if vace_context is not None and block_id in vace.vace_layers_mapping:
